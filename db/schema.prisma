@@ -21,6 +21,7 @@ model User {
   hashedPassword String?
   role           String   @default("USER")
 
+  answers    Answer[]
   polls    Poll[]
   sessions Session[]
   tokens   Token[]
@@ -79,6 +80,9 @@ model Poll {
   description String
   isActive    Boolean
 
+  // answers is a convenience / fast lookup
+  // equivalent to looking at all options then their answers
+  answers Answer[]
   options Option[]
 }
 
@@ -88,6 +92,21 @@ model Option {
   updatedAt DateTime @updatedAt
   text      String
 
+  answers Answer[]
+
+  poll   Poll @relation(fields: [pollId], references: [id])
+  pollId Int
+}
+
+model Answer {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User  @relation(fields: [userId], references: [id])
+  userId    Int
+  option    Option @relation(fields: [optionId], references: [id])
+  optionId  Int
   poll      Poll @relation(fields: [pollId], references: [id])
   pollId    Int
 }
