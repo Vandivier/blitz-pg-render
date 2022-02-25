@@ -21,7 +21,7 @@ model User {
   hashedPassword String?
   role           String   @default("USER")
 
-  polls Poll[]
+  polls    Poll[]
   sessions Session[]
   tokens   Token[]
 }
@@ -66,16 +66,28 @@ model Token {
 // }
 
 model Poll {
-  id              Int      @id @default(autoincrement())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  createdBy       User @relation(fields: [userId], references: [id])
-  userId Int
+  createdBy User @relation(fields: [userId], references: [id])
+  userId    Int
 
   // createdBy       User
   // responseOptions String[]
-  title           String
-  description     String
-  isActive        Boolean
+  title       String
+  description String
+  isActive    Boolean
+
+  options Option[]
+}
+
+model Option {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  text      String
+
+  poll      Poll @relation(fields: [pollId], references: [id])
+  pollId    Int
 }
