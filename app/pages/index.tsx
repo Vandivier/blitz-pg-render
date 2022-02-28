@@ -91,6 +91,12 @@ const Home: BlitzPage = () => {
               <a>/projects</a>
             </Link>
           </p>
+          <p>
+            and go to{" "}
+            <Link href="/polls/new">
+              <a>Create a Poll</a>
+            </Link>
+          </p>
         </div>
         <div className="buttons" style={{ marginTop: "5rem" }}>
           <a
